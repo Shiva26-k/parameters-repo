@@ -1,4 +1,4 @@
-pipeline{
+ pipeline{
     agent {
         label 'java-slave'
     }
@@ -9,7 +9,7 @@ pipeline{
         stage('Build'){
             when{
                 anyOf{
-                    branch 'prod'
+                    BRANCH_NAME 'prod'
                     environment name: 'DEPLOY_TO', value: 'release'
                 }
             }
