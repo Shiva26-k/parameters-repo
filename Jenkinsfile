@@ -2,64 +2,31 @@ pipeline{
     agent {
         label 'java-slave'
     }
+    environment{
+        DEPLOY_TO = 'stage'
+    }
     stages{
         stage('Build'){
+            when{
+                anyOf{
+                    branch : 'prod'
+                    environment name :'DEPLOY_TO' , value: 'release'
+                }
+            }
             steps{
-                echo "Build is success"
+                echo "Build stage is running"
             }
         }
-        stage('Scans'){
-            parallel{
-                    stage('SonarScans'){
-                steps{
-                    echo "sonarscan is running"
-                    sleep 15
-                }
-                }
-                stage('FortifyScans'){
-                    steps{
-                        echo "Fortifyscan is executing "
-                        sleep 15
-                    }
-                }
-                stage('PrismaScans'){
-                    steps{
-                        echo "Prismascan is executing"
-                        sleep 15
-                    }
-                }
-            }
+    }
+    post{
+        always{
+            echo "job success by using anyof option"
         }
-       stage('DeplotTodev'){
-        steps{
-            echo "Deploying to dev env"
+        success{
+            echo "***successfull to build stages***"
         }
-       }
-       stage('DeployToTEst'){
-        steps{
-            echo "Deploying to Test env"
+        failure{
+            echo "***failure to build stages***"
         }
-       }
-       stage('DeployToStage'){
-        steps{
-            echo "Deploying to stage env"
-        }
-       }
-       stage('DeployToProd'){
-        // options{
-        //         timeout (time: 300 , unit: 'SECONDS')
-        // }
-        // input{
-        //     message "Deploy to prod ?"
-        //     ok 'yes'
-        //     submitter 'Shiva,rakesh' //who should be having access to approve 
-        // }
-        steps{
-            echo "Deploying to prod env"
-            timeout (time: 300, unit: 'SECONDS') {
-                input message: "deploy to dev " , ok: 'yes' , submitter: 'Shiva'
-            }
-        }
-       }
     }
 }
