@@ -9,7 +9,7 @@ pipeline{
         stage('Build'){
             when{
                 anyOf{
-                    BRANCH_NAME 'prod'
+                    branch 'prod'
                     environment name: 'DEPLOY_TO', value: 'stage'
                 }
             }
