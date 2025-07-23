@@ -56,7 +56,7 @@ pipeline{
         // }
         steps{
             echo "Deploying to prod env"
-            timeout (time: '300' , unit: 'SECONDS') {
+            timeout (time: 300, unit: 'SECONDS') {
                 input message: "deploy to dev " , ok: 'yes' , submitter: 'Shiva'
             }
         }
