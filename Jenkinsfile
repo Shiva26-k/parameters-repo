@@ -1,7 +1,5 @@
 pipeline{
-    agent {
-        label 'java-slave'
-    }
+    agent any
     environment{
         DEPLOY_TO = 'stage'
     }
@@ -10,7 +8,7 @@ pipeline{
             when{
                 anyOf{
                     branch 'prod'
-                    environment name: 'DEPLOY_TO', value: 'stage'
+                    environment name: 'DEPLOY_TO', value: 'stages'
                 }
             }
             steps{
