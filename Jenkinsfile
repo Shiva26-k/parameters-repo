@@ -46,6 +46,14 @@ pipeline{
         }
        }
        stage('DeployToProd'){
+        options{
+                timeout (time: 300 , unit: 'SECONDS')
+        }
+        input{
+            message "Deploy to prod ?"
+            ok 'yes'
+            submitter 'Shiva,rakesh' //who should be having access to approve 
+        }
         steps{
             echo "Deploying to prod env"
         }
