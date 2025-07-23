@@ -30,6 +30,25 @@ pipeline{
                 }
             }
         }
-       
+       stage('DeplotTodev'){
+        steps{
+            echo "Deploying to dev env"
+        }
+       }
+       stage('DeployToTEst'){
+        steps{
+            echo "Deploying to Test env"
+        }
+       }
+       stage('DeployToStage'){
+        steps{
+            echo "Deploying to stage env"
+        }
+       }
+       stage('DeployToProd'){
+        steps{
+            echo "Deploying to prod env"
+        }
+       }
     }
 }
